@@ -174,8 +174,8 @@ id输入:&nbsp;<input type="text" id="input" placeholder="多个id用英文,分�
                     $list[$data['id']] = array(
                             'title' => $data['name'],
                             'artist' => $data['artists'][0]['name'],
-                            'location' => str_replace('http://m', 'http://p', $data['mp3Url']),
-                            'pic' => $data['album']['blurPicUrl'].'?param=106x106'
+                            'location' => 'http://music.163.com/song/media/outer/url?id='.$data['id'].'.mp3',
+                            'pic' => $data['album']['blurPicUrl'].'?param=106y106'
                     );
                 }
                 //修复一次添加多个id的乱序问题
