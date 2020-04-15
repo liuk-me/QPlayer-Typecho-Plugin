@@ -111,10 +111,10 @@
 <div id="title"><h1>网易云音乐id解析</h1></div>
 <div id="radiogroup">
 id类型:
-<input type="radio" name="type" class="mgr" value="collect"  <?php if ($_POST['type']=="collect" || $_POST['type'] == null) echo "checked";?>>歌单
+<input type="radio" name="type" class="mgr" value="song"  <?php if ($_POST['type']=="song" || $_POST['type'] == null) echo "checked";?>>单曲
 <input type="radio" name="type" class="mgr" value="album" <?php if ($_POST['type']=="album") echo "checked";?>>专辑
 <input type="radio" name="type" class="mgr" value="artist" <?php if ($_POST['type']=="artist") echo "checked";?>>艺人
-<input type="radio" name="type" class="mgr" value="song" <?php if ($_POST['type']=="song") echo "checked";?>>单曲
+<input type="radio" name="type" class="mgr" value="collect" <?php if ($_POST['type']=="collect") echo "checked";?>>歌单
 </div>
 <br>
 <div id="inputform">
@@ -174,8 +174,8 @@ id输入:&nbsp;<input type="text" id="input" placeholder="多个id用英文,分�
                     $list[$data['id']] = array(
                             'title' => $data['name'],
                             'artist' => $data['artists'][0]['name'],
-                            'location' => str_replace('http://m', 'http://p', $data['mp3Url']),
-                            'pic' => $data['album']['blurPicUrl'].'?param=106x106'
+                            'location' => 'http://music.163.com/song/media/outer/url?id='.$data['id'].'.mp3',
+                            'pic' => $data['album']['blurPicUrl'].'?param=106y106'
                     );
                 }
                 //修复一次添加多个id的乱序问题
@@ -201,11 +201,10 @@ id输入:&nbsp;<input type="text" id="input" placeholder="多个id用英文,分�
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $input = $_POST["id"];
-    $type = $_POST["type"];
     $resultList = explode(",", $input);
     $result="";
     foreach ($resultList as $key => $value) {
-        $musicList = get_netease_music($value,$type);
+        $musicList = get_netease_music($value,$type=$_POST["type"]);
         foreach($musicList as $x=>$x_value) {
             $result .= "{";
             foreach ($x_value as $key => $value) {
